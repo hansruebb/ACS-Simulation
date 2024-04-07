@@ -1,9 +1,9 @@
 u = symunit;
 
-load('constants.mat')
+%load('constants.mat')
 
-r_vec = 0.02:0.02:0.4; %0.05:0.05:1.0;
-e_vec = 1.5:0.5:8;
+r_vec = 0.75:0.2:0.75; %0.05:0.05:1.0;
+e_vec = 3.24:0.5:3.24;
 res = zeros(size(r_vec, 2), size(e_vec, 2));
 
 for r_idx = 1:size(r_vec, 2)
@@ -19,10 +19,10 @@ for r_idx = 1:size(r_vec, 2)
     end 
 end
 
-surf(r_vec, e_vec, res');
-xlabel("Throat radius (mm)");
-ylabel("Expansion ratio");
-zlabel("Specific impuls (s)");
+%surf(r_vec, e_vec, res');
+%xlabel("Throat radius (mm)");
+%ylabel("Expansion ratio");
+%zlabel("Specific impuls (s)");
 
 function [total_impuls, specific_impuls] = run_sim(throat_radius, expansion_ratio)
 
@@ -59,13 +59,13 @@ function [total_impuls, specific_impuls] = run_sim(throat_radius, expansion_rati
     thrust = convert(f, 'N');
     
     %Plot thrust and output some additional stats
-    %figure
-    %plot(time_steps, value(thrust))
-    %title("Thrust over time")
-    %xlabel("Time (s)")
-    %ylabel("Thrust (N)")
+    figure
+    plot(time_steps, value(thrust))
+    title("Thrust over time")
+    xlabel("Time (s)")
+    ylabel("Thrust (N)")
 
-    %disp(['The exit mach is: ', num2str(exit_mach(1).value)])
+    disp(['The exit mach is: ', num2str(exit_mach(1).value)])
     
     F = griddedInterpolant(time_steps, value(thrust));
     f_t = @(t) (F(t));
